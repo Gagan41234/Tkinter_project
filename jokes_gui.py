@@ -162,4 +162,4 @@ l1.place(x=600, y=350)
 # fp.truncate(0)
 # fp.close()
 jokes()
-root.mainloop(
+root.mainloop()
