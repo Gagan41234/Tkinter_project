@@ -15,36 +15,42 @@ def show():
         for i in selected[::-1]:
             text.delete(i)
 
-    mynew = Toplevel(root)
-    mynew.geometry("900x600")
-    mynew.resizable(0.0, 0.0)
-    text = Listbox(mynew, height=20, selectmode=MULTIPLE, width=200, font=("", "15"))
-    text.pack(fill=BOTH)
-    file = open("jokes.txt", "r")
-    f = file.read()
-    f = f.split("\n")
-    for i in f:
-        text.insert(END, i)
-    file.close()
-    fram = Frame(mynew, width=800, height=100)
-    fram.pack(side=BOTTOM)
-    b1 = Button(
-        fram,
-        text="Delete",
-        width=20,
-        font=("Arial", "20"),
-        command=delete,
-        relief=("raised"),
-    )
-    b1.place(x=70, y=20)
-    b1 = Button(
-        fram,
-        text="Save",
-        width=20,
-        font=("Arial", "20"),
-        command=save,
-    )
-    b1.place(x=400, y=20)
+    try:
+        file = open("jokes.txt", "r")
+    except:
+        l1.config(text="File does not exist to create a file,copy a single joke")
+    else:
+        mynew = Toplevel(root)
+        mynew.geometry("900x600")
+        mynew.resizable(0.0, 0.0)
+        text = Listbox(
+            mynew, height=20, selectmode=MULTIPLE, width=200, font=("", "15")
+        )
+        text.pack(fill=BOTH)
+        f = file.read()
+        f = f.split("\n")
+        for i in f:
+            text.insert(END, i)
+        file.close()
+        fram = Frame(mynew, width=800, height=100)
+        fram.pack(side=BOTTOM)
+        b1 = Button(
+            fram,
+            text="Delete",
+            width=20,
+            font=("Arial", "20"),
+            command=delete,
+            relief=("raised"),
+        )
+        b1.place(x=70, y=20)
+        b1 = Button(
+            fram,
+            text="Save",
+            width=20,
+            font=("Arial", "20"),
+            command=save,
+        )
+        b1.place(x=400, y=20)
 
 
 def jokes():
@@ -54,6 +60,11 @@ def jokes():
     if dicitionary_jokes["type"] == "single":
 
         def copy():
+            try:
+                file = open("jokes.txt", "a")
+            except:
+                file = open("jokes.txt", "w")
+                file.close()
             l1.config(text="Saved at: Desktop\gui\jokes.txt")
             file = open("jokes.txt", "a")
             file.write(dicitionary_jokes["joke"] + "\n\n")
@@ -73,6 +84,11 @@ def jokes():
     else:
 
         def copy():
+            try:
+                file = open("jokes.txt", "a")
+            except:
+                file = open("jokes.txt", "w")
+                file.close()
             l1.config(text="Saved at: Desktop\gui\jokes.txt")
             file = open("jokes.txt", "a")
 
@@ -141,9 +157,9 @@ btn2 = Button(
 )
 btn2.place(x=651, y=410)
 l1 = Label(text="sadfsd", fg="red", bg="#fdf0d5", font=("Arial", "15"))
-l1.place(x=830, y=350)
+l1.place(x=600, y=350)
 # fp = open("jokes.txt", "r+")
 # fp.truncate(0)
 # fp.close()
 jokes()
-root.mainloop()
+root.mainloop(
